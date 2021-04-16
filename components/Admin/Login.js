@@ -37,7 +37,7 @@ export default function Login() {
                 'Content-Type': 'text/plain'
             }
         }
-        axios.post(apiUrl, payload, config)
+        axios.post('https://bit-tower.vercel.app/api/admin/login', payload, config)
         .then(result => {
             if (result.data == 'password is invalid') {
                 setPasswordError('password is invalid')
