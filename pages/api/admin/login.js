@@ -1,26 +1,15 @@
 import dbConnect from '../utils/dbConnect.js'
 import Admin from '../../../models/Admin'
-import Cors from 'cors'
-
-const cors = Cors({
-    methods: ['GET', 'HEAD'],
-})
-
-function runMiddleware(req, res, fn) {
-    return new Promise((resolve, reject) => {
-        fn(req, res, (result) => {
-        if (result instanceof Error) {
-            return reject(result)
-        }
-
-        return resolve(result)
-        })
-    })
-}
+import NextCors from 'nextjs-cors';
 
 export default async function handler(req, res) {
-    await runMiddleware(req, res, cors)
-    
+    await NextCors(req, res, {
+        // Options
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+     });
+
     await dbConnect()
     try {
         //Check if email exists
