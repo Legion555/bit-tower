@@ -1,7 +1,7 @@
 import dbConnect from '../utils/dbConnect.js'
 import Admin from '../../../models/Admin'
 import Cors from 'cors'
-import initMiddleware from '../../lib/init-middleware'
+import initMiddleware from '../../../lib/init-middleware'
 
 const cors = initMiddleware(
   // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
