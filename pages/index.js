@@ -1,65 +1,66 @@
+import {useState, useEffect} from 'react'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+//components
+import Intro from '../components/Intro'
+import Background from '../components/Background'
+import CloudContainer from '../components/Clouds'
+import Building from '../components/Building'
+import ViewRoom from '../components/ViewRoom'
+import Car from '../components/Car'
+import Tree from '../components/Tree'
+import SocialLinks from '../components/SocialLinks'
+import Audio from '../components/Audio'
+
 
 export default function Home() {
+  const [isEntered, setIsEntered] = useState(false);
+  const [timeOfDay, setTimeOfDay] = useState();
+
+  const [isViewRoom, setIsViewRoom] = useState(false);
+  const [roomImgUrl, setRoomImgUrl] = useState(null);  
+
+  useEffect(() => {
+    let today = new Date(1618532556);
+    let hour = today.getHours();
+    console.log(hour)
+    if (0 <= hour && hour < 6) {
+      return setTimeOfDay('night');
+    } else if (5 < hour && hour < 19) {
+      return setTimeOfDay('midday');
+    // } else if (8 < hour && hour < 11) {
+    //   return setTimeOfDay('sunrise');
+    // } else if (11 < hour && hour < 16) {
+    //   return setTimeOfDay('midday');
+    // } else if (16 < hour && hour < 19) {
+    //   return setTimeOfDay('sunset');
+    } else if (19 < hour && hour < 24) {
+      return setTimeOfDay('night');
+    }
+  }, [])  
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Bit Tower</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <div className="w-full h-screen relative overflow-hidden">
+        {!isEntered && <Intro setIsEntered={setIsEntered} /> }
+        <Background timeOfDay={timeOfDay} setTimeOfDay={setTimeOfDay} />
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <Building timeOfDay={timeOfDay} setIsViewRoom={setIsViewRoom} setRoomImgUrl={setRoomImgUrl} />
+        {isViewRoom &&
+          <ViewRoom timeOfDay={timeOfDay} setIsViewRoom={setIsViewRoom} roomImgUrl={roomImgUrl} setRoomImgUrl={setRoomImgUrl} />
+        }
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        {/* <Car isEntered={isEntered} />
+        <Tree /> */}
+        {isEntered && <CloudContainer /> }
+        {isEntered && <Audio /> }
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+        <SocialLinks />
+      </div>
     </div>
   )
 }
