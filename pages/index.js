@@ -20,7 +20,7 @@ export default function Home() {
   const [roomImgUrl, setRoomImgUrl] = useState(null);  
 
   useEffect(() => {
-    let today = new Date(1618532556);
+    let today = new Date();
     let hour = today.getHours();
     console.log(hour)
     if (0 <= hour && hour < 6) {
