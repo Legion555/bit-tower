@@ -27,7 +27,16 @@ export default function Login() {
             email: email,
             password: password
         }
-        axios.post('/api/admin/login', payload)
+        let apiUrl;
+        if (process.env.NODE_ENV == 'development') {apiUrl = '/api/admin/login'} else {apiUrl = 'https://bit-tower.vercel.app/api/admin/login'}
+        let config = {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+            }
+        }
+        axios.post(apiUrl, payload, config)
         .then(result => {
             if (result.data == 'password is invalid') {
                 setPasswordError('password is invalid')
