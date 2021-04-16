@@ -1,21 +1,7 @@
 import dbConnect from '../utils/dbConnect.js'
 import Admin from '../../../models/Admin'
-import Cors from 'cors'
-import initMiddleware from '../../../lib/init-middleware'
-
-const cors = initMiddleware(
-  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
-  Cors({
-    // Only allow requests with GET, POST and OPTIONS
-    "origin": "*",
-    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-    "preflightContinue": true,
-  })
-)
 
 export default async function handler(req, res) {
-    await cors(req, res)
-
     await dbConnect()
     try {
         //Check if email exists
