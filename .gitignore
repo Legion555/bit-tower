@@ -14,9 +14,6 @@
 
 # production
 /build
-/components
-/pages/admin
-/pages/index
 
 # misc
 .DS_Store
