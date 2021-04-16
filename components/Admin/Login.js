@@ -33,7 +33,8 @@ export default function Login() {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+                'Content-Type': 'text/plain'
             }
         }
         axios.post(apiUrl, payload, config)
